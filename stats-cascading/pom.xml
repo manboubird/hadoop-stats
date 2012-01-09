@@ -2,14 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<name>cascading stats</name>
-	<artifactId>stas-cascading</artifactId>
+	<artifactId>stats-cascading</artifactId>
 	<parent>
 		<artifactId>hadoop-stats</artifactId>
 		<groupId>hadoop</groupId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<description>Simple Hadoop Client</description>
+	<description>search log statistics calculation with cascading</description>
 
 	<properties>
 
@@ -20,10 +20,6 @@
 		<riffle.version>0.1-dev</riffle.version>
 		<janino.version>2.5.16</janino.version>
 		<jgrapht.jdk1.6.version>0.8.1</jgrapht.jdk1.6.version>
-
-		<!-- jdkLevel>1.6</jdkLevel>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.build.outputEncoding>UTF-8</project.build.outputEncoding-->
 
 	</properties>
 
@@ -87,16 +83,16 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>appassembler-maven-plugin</artifactId>
-				<!-- executions>
+				<executions>
 					<execution>
 						<goals>
 							<goal>assemble</goal>
 						</goals>
 						<phase>package</phase>
 					</execution>
-				</executions-->
+				</executions>
 				<configuration>
-					<!-- binFileExtensions>
+					<binFileExtensions>
 						<unix>.sh</unix>
 					</binFileExtensions>
 					<extraJvmArguments>-server</extraJvmArguments>
@@ -105,15 +101,11 @@
 					<repositoryName>lib</repositoryName>
 					<platforms>
 						<platform>unix</platform>
-					</platforms-->
+					</platforms>
 					<programs>
 						<program>
-							<mainClass>cascading.stats.StatsMain</mainClass>
+							<mainClass>cascading.stats.SearchSessionStatsMain</mainClass>
 							<name>stats</name>
-						</program>
-						<program>
-							<mainClass>cascading.stats.ArrivalRateMain</mainClass>
-							<name>arrivalRate</name>
 						</program>
 					</programs>
 				</configuration>
@@ -207,36 +199,11 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<!-- exclusions>
-				<exclusion>
-					<groupId>javax.mail</groupId>
-					<artifactId>mail</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.jms</groupId>
-					<artifactId>jms</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jdmk</groupId>
-					<artifactId>jmxtools</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jmx</groupId>
-					<artifactId>jmxri</artifactId>
-				</exclusion>
-			</exclusions-->
 		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
-		<!-- dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>${guava.version}</version>
-			<scope>test</scope>
-		</dependency-->
 	</dependencies>
 </project>

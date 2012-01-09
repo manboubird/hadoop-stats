@@ -10,16 +10,18 @@ import cascading.tuple.Fields;
 import cascading.tuple.Tuple;
 import cascading.tuple.TupleEntry;
 
-public class CalcVarianceAndMedian  extends BaseOperation implements Buffer {
+/**
+ * Calculate variance and median based on precomputed average.
+ */
+public class CalcStats extends BaseOperation implements Buffer {
 
-	// 出力するフィールド名の定義
-	// *Input のサッフィクスがフィールド名は入力フィールド名とかぶらないようにするためです。
-	public static final String FN_COUNT		= "countInput";
-	public static final String FN_AVERAGE	= "averageInput";
-	public static final String FN_VARIANCE	= "variance";
-	public static final String FN_MEDIAN	= "median";
-	public static final String FN_MIN		= "minInput";
-	public static final String FN_MAX		= "maxInput";
+	// Output fields definition
+	public static final String OUTPUT_FN_COUNT		= "count";
+	public static final String OUTPUT_FN_AVERAGE	= "average";
+	public static final String OUTPUT_FN_VARIANCE	= "variance";
+	public static final String OUTPUT_FN_MEDIAN		= "median";
+	public static final String OUTPUT_FN_MIN		= "min";
+	public static final String OUTPUT_FN_MAX		= "max";
 
 	public static final int INPUT_ARGS_NUM = 6;
 	public static final int INPUT_ARGS_FN_RECORD_TYPE	= 0;
@@ -29,9 +31,9 @@ public class CalcVarianceAndMedian  extends BaseOperation implements Buffer {
 	public static final int INPUT_ARGS_FN_MIN			= 4;
 	public static final int INPUT_ARGS_FN_MAX			= 5;
 	
-	public static final Fields OUTPUT_FIELDS = new Fields(FN_COUNT, FN_AVERAGE, FN_VARIANCE, FN_MEDIAN, FN_MIN, FN_MAX);
+	public static final Fields OUTPUT_FIELDS = new Fields(OUTPUT_FN_COUNT, OUTPUT_FN_AVERAGE, OUTPUT_FN_VARIANCE, OUTPUT_FN_MEDIAN, OUTPUT_FN_MIN, OUTPUT_FN_MAX);
 
-	public CalcVarianceAndMedian() {
+	public CalcStats() {
 		super(INPUT_ARGS_NUM, OUTPUT_FIELDS);
 	}
 
@@ -41,7 +43,7 @@ public class CalcVarianceAndMedian  extends BaseOperation implements Buffer {
 
 		TupleEntry tupleEntry = arguments.next();
 		if(tupleEntry.getInteger(INPUT_ARGS_FN_RECORD_TYPE) != 0) {
-			throw new IllegalStateException("First field's recordType must be 0, got: " + tupleEntry.toString() );
+			throw new IllegalStateException("First field's type must be 0, got: " + tupleEntry.toString() );
 	    }
 		double average = tupleEntry.getDouble(INPUT_ARGS_FN_AVERAGE);
 		long count = tupleEntry.getLong(INPUT_ARGS_FN_COUNT);
@@ -63,10 +65,10 @@ public class CalcVarianceAndMedian  extends BaseOperation implements Buffer {
 			varianceAmount += Math.pow((queryCount - average), 2);
 			
 			if(actualCount == meanTargetCounter) {
-				// x 番目の中央値の取得（n が偶数、奇数の時）
+				// get Xth value as median.
 				median = queryCount;
 			}else if(isCountOdd == false && actualCount == meanTargetCounter + 1) {
-				// n が奇数の場合は x+1 番目の値を x 番目の値と足して、２で割る。
+				// when n is odd, add (X+1)th value to X th and divide by 2.
 				median = (median + queryCount) / 2;
 			}
 		}

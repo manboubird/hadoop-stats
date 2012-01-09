@@ -242,6 +242,6 @@
 	</scm>
 
 	<modules>
-		<module>stas-cascading</module>
+		<module>stats-cascading</module>
 	</modules>
 </project>
