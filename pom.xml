@@ -26,7 +26,7 @@
 	</developers>
 
 	<properties>
-		<cloudera.cdh.version>0.20.2-cdh3u0</cloudera.cdh.version>
+		<cloudera.cdh.version>0.20.2-cdh3u2</cloudera.cdh.version>
 		<commons.io.version>2.0.1</commons.io.version>
 		<commons.cli.version>1.2</commons.cli.version>
 		<log4j.version>1.2.16</log4j.version>
@@ -41,7 +41,7 @@
 		<project.build.outputEncoding>UTF-8</project.build.outputEncoding>
 	</properties>
 
-	<build>
+	<build>	
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -104,26 +104,6 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>appassembler-maven-plugin</artifactId>
 					<version>1.1.1</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>assemble</goal>
-						</goals>
-						<phase>package</phase>
-					</execution>
-				</executions>
-				<configuration>
-					<binFileExtensions>
-						<unix>.sh</unix>
-					</binFileExtensions>
-					<extraJvmArguments>-server</extraJvmArguments>
-					<configurationDirectory>conf</configurationDirectory>
-					<repositoryLayout>flat</repositoryLayout>
-					<repositoryName>lib</repositoryName>
-					<platforms>
-						<platform>unix</platform>
-					</platforms>
-				</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -243,5 +223,6 @@
 
 	<modules>
 		<module>stats-cascading</module>
+		<module>stats-pig</module>
 	</modules>
 </project>
